@@ -268,6 +268,9 @@ class DropdownSearch<T> extends StatefulWidget {
   /// function to override position calculation
   final PositionCallback? positionCallback;
 
+  /// Max lines for the search field button text
+  final int? dropdownSearchTextMaxLines;
+
   DropdownSearch({
     Key? key,
     this.onSaved,
@@ -327,6 +330,7 @@ class DropdownSearch<T> extends StatefulWidget {
     this.selectionListViewProps = const SelectionListViewProps(),
     this.focusNode,
     this.positionCallback,
+    this.dropdownSearchTextMaxLines = 1,
   })  : assert(!showSelectedItems || T == String || compareFn != null),
         this.searchFieldProps = searchFieldProps ?? TextFieldProps(),
         this.isMultiSelectionMode = false,
@@ -407,6 +411,7 @@ class DropdownSearch<T> extends StatefulWidget {
     this.selectionListViewProps = const SelectionListViewProps(),
     this.focusNode,
     this.positionCallback,
+    this.dropdownSearchTextMaxLines = 1,
   })  : assert(!showSelectedItems || T == String || compareFn != null),
         this.searchFieldProps = searchFieldProps ?? TextFieldProps(),
         this.onChangedMultiSelection = onChanged,
@@ -487,6 +492,8 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
             color: Theme.of(context).primaryColorLight),
         child: Text(
           _selectedItemAsString(item),
+          maxLines: widget.dropdownSearchTextMaxLines,
+          overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle2,
         ),
@@ -512,6 +519,8 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
         );
       }
       return Text(_selectedItemAsString(getSelectedItem),
+          maxLines: widget.dropdownSearchTextMaxLines,
+          overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.subtitle1);
     }
 
